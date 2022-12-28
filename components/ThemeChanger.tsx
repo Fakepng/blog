@@ -1,15 +1,16 @@
-import { useColorMode } from "@chakra-ui/react";
+import { useColorMode, Circle, IconButton } from "@chakra-ui/react";
 import { FaSun, FaMoon } from "react-icons/fa";
 
-export default function ThemeChanger() {
+export default function ThemeChangerComponent() {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <div>
-      {colorMode === "light" ? (
-        <FaSun onClick={toggleColorMode} className="hover:cursor-pointer" />
-      ) : (
-        <FaMoon onClick={toggleColorMode} className="hover:cursor-pointer" />
-      )}
+      <IconButton
+        colorScheme="gray"
+        aria-label="Theme Changer"
+        onClick={toggleColorMode}
+        icon={colorMode === "light" ? <FaSun /> : <FaMoon />}
+      />
     </div>
   );
 }
