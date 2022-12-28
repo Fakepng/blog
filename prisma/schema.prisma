@@ -10,27 +10,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Example {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Account {
-  id                String  @id @default(uuid())
+  id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
   providerAccountId String
-  refrest_token     String? @db.Text
+  refresh_token     String? @db.Text
   access_token      String? @db.Text
   expires_at        Int?
   token_type        String?
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
 model Session {
-  id           String   @id @default(uuid())
+  id           String   @id @default(cuid())
   sessionToken String   @unique
   userId       String
   expires      DateTime
@@ -38,13 +43,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(uuid())
+  id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
-  emailVerified DateTime
+  emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
+  blog          Blog[]
 }
 
 model VerificationToken {
@@ -53,4 +59,15 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Blog {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  content     String
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
