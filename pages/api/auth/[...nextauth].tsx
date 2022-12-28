@@ -4,25 +4,22 @@ import prisma from "@/lib/prisma";
 
 import DiscordProvider from "next-auth/providers/discord";
 
-const discordScopes = ["email", "identify"].join(" ");
-
 export const authOptions: AuthOptions = {
-  callbacks: {
-    session({ session, token, user }) {
-      return session;
-    },
-  },
+  // callbacks: {
+  //   session({ session, token, user }) {
+  //     return session;
+  //   },
+  // },
   adapter: PrismaAdapter(prisma),
-  pages: {
-    signIn: "/auth/signin",
-    signOut: "/auth/signout",
-    error: "/auth/error",
-  },
+  // pages: {
+  //   signIn: "/auth/signin",
+  //   signOut: "/auth/signout",
+  //   error: "/auth/error",
+  // },
   providers: [
     DiscordProvider({
       clientId: process.env.DISCORD_CLIENT_ID,
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
-      authorization: { params: { scope: discordScopes } },
     }),
   ],
   secret: process.env.secret,
