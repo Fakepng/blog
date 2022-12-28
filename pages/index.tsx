@@ -1,6 +1,6 @@
 import Head from "next/head";
-import { Heading } from "@chakra-ui/react";
-import ThemeChanger from "@/components/ThemeChanger";
+import { Container, Heading } from "@chakra-ui/react";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   return (
@@ -11,9 +11,16 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <nav>
+        <Navbar />
+      </nav>
       <main>
-        <Heading>Welcome to Chakra + Next.js</Heading>
-        <ThemeChanger />
+        <Container maxW="container.xl">
+          <Heading>Welcome to Chakra + Next.js</Heading>
+          {Array.from(Array(100).keys()).map((n) => (
+            <Heading key={n}>Welcome {n}</Heading>
+          ))}
+        </Container>
       </main>
     </>
   );
